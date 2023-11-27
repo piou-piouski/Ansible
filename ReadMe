@@ -61,8 +61,13 @@ ansible localhost -m community.general.ini_file -a 'option=become_ask_pass value
 ansible localhost -m community.general.ini_file -a 'option=private_key_file value=/home/formation/.ssh/id_rsa section=defaults path=/etc/ansible/ansible.cfg'
 
 
-
-
+# Jouer un playbook
+ansible-playbook namePlaybook.yml --syntax-check
+---
+- hosts: all
+  tasks:
+  - name : 
+    package :
 
 
 
