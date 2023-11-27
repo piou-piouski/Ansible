@@ -30,3 +30,43 @@ localhost = nom de la machine
 -m ansible.builtin.lineinfile = nom du module qui permet l'insertion dans un fichier
 -a = les arguments de la commande -m
 create = créé le fichier si il n'existe pas
+
+# dump d'un fichier
+ansible -o all -m ansible.builtin.get_url -a 'url=https://starship.rs/install.sh dest=/tmp mode=0755'
+
+# executer un script
+ansible -o all -m ansible.builtin.command -a '/tmp/install.sh --yes creates="/usr/local/bin/starship"'
+
+# copier un fichier
+ansible -o all -m ansible.builtin.copy -a 'content="eval \"$(/usr/local/bin/starship init bash)\"" dest=/etc/profile.d/zstarship.sh'
+
+# créer une paire de clé publique / clé privée sur le pilote Remarque; cette étape peut être réalisée avec ansible (openssh_keypair)
+ansible localhost -m community.crypto.openssh_keypair -a 'path=/home/formation/.ssh/id_rsa owner=formation group=formation' -u formation
+
+# créer un user
+ansible cibles -m ansible.builtin.user -a 'user=ansible password={{ "123Soleil!"|password_hash("sha512", "hello") }} create_home=yes home=/home/ansible' -o
+
+ansible cibles -o -m community.general.sudoers -a 'name="ansible" user=ansible commands=ALL nopassword=true'
+
+# déployer la clé publique ssh
+ansible cibles -u formation -k -m ansible.posix.authorized_key -a 'key={{ lookup( "file", "~/.ssh/id_rsa.pub") }} user=ansible'
+test de connection : 
+  ssh ansible@debian2
+  sudo -l
+
+# Permet de sauvegarder le mot de passe d'ansible
+ansible localhost -m community.general.ini_file -a 'option=remote_user value=ansible section=defaults path=/etc/ansible/ansible.cfg'
+ansible localhost -m community.general.ini_file -a 'option=ask_pass value=False section=defaults path=/etc/ansible/ansible.cfg'
+ansible localhost -m community.general.ini_file -a 'option=become_ask_pass value=False section=privilege_escalation path=/etc/ansible/ansible.cfg'
+ansible localhost -m community.general.ini_file -a 'option=private_key_file value=/home/formation/.ssh/id_rsa section=defaults path=/etc/ansible/ansible.cfg'
+
+
+
+
+
+
+
+
+
+
+
