@@ -1,1 +1,11 @@
 git : https://infra.opendoor.fr/git/tom/tp_intro_git
+
+
+##INSTALL
+
+git clone https://infra.opendoor.fr/git/tom/sib_1_configuration.git \
+sudo dnf install ansible cowsay -y 
+sudo cp sib_1_configuration/ansible.cfg /etc/ansible/
+sudo mkdir -m 1777 /etc/ansible/facts
+
+##
