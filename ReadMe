@@ -68,7 +68,9 @@ ansible-playbook namePlaybook.yml --syntax-check
 
 # Gestion des erreurs : https://infra.opendoor.fr/git/tom/sib_11_gestion_erreurs
 
+# Roles : https://infra.opendoor.fr/git/tom/sib_15_roles/src/branch/master_setup
 
+# Lookup : https://infra.opendoor.fr/git/tom/sib_26_lookups
 
 
 
